@@ -4,47 +4,101 @@ import django.db.models.deletion
 import pgvector.django.indexes
 import pgvector.django.vector
 from django.db import migrations, models
+from pgvector.django import VectorExtension
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
+        VectorExtension(),
         migrations.CreateModel(
-            name='Collection',
+            name="Collection",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('title', models.CharField(help_text="The collection's title", max_length=250, verbose_name='Titel')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                (
+                    "title",
+                    models.CharField(
+                        help_text="The collection's title",
+                        max_length=250,
+                        verbose_name="Titel",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Collection',
-                'verbose_name_plural': 'Collections',
-                'ordering': ['title'],
+                "verbose_name": "Collection",
+                "verbose_name_plural": "Collections",
+                "ordering": ["title"],
             },
         ),
         migrations.CreateModel(
-            name='TextSnippet',
+            name="TextSnippet",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('content', models.TextField(help_text='The actual text content', verbose_name='Content')),
-                ('backlink', models.URLField(verbose_name='Link to source')),
-                ('text_hash', models.CharField(db_index=True, editable=False, max_length=64)),
-                ('embedding', pgvector.django.vector.VectorField(blank=True, dimensions=768, null=True, verbose_name='Embedding (nomic-embed-text-v1.5)')),
-                ('collection', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='snippets', to='archiv.collection')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                (
+                    "content",
+                    models.TextField(
+                        help_text="The actual text content", verbose_name="Content"
+                    ),
+                ),
+                ("backlink", models.URLField(verbose_name="Link to source")),
+                (
+                    "text_hash",
+                    models.CharField(db_index=True, editable=False, max_length=64),
+                ),
+                (
+                    "embedding",
+                    pgvector.django.vector.VectorField(
+                        blank=True,
+                        dimensions=768,
+                        null=True,
+                        verbose_name="Embedding (nomic-embed-text-v1.5)",
+                    ),
+                ),
+                (
+                    "collection",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="snippets",
+                        to="archiv.collection",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Text Snippet',
-                'verbose_name_plural': 'Text Snippets',
-                'ordering': ['-updated_at'],
-                'indexes': [pgvector.django.indexes.HnswIndex(ef_construction=64, fields=['embedding'], m=16, name='textsnippetindex_nomic', opclasses=['vector_l2_ops'])],
+                "verbose_name": "Text Snippet",
+                "verbose_name_plural": "Text Snippets",
+                "ordering": ["-updated_at"],
+                "indexes": [
+                    pgvector.django.indexes.HnswIndex(
+                        ef_construction=64,
+                        fields=["embedding"],
+                        m=16,
+                        name="textsnippetindex_nomic",
+                        opclasses=["vector_l2_ops"],
+                    )
+                ],
             },
         ),
     ]
