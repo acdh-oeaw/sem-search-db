@@ -7,7 +7,7 @@ from archiv.models import TextSnippet
 def vectorize(
     client: OpenAI,
     model_object: TextSnippet,
-    vector_field: str = "embedding_nomic",
+    vector_field: str = "embedding",
     embedding_model_name: str = "nomic-embed-text",
     update=False,
 ):

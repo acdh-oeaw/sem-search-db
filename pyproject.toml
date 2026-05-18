@@ -15,6 +15,7 @@ dependencies = [
     "pgvector>=0.4.2",
     "psycopg2-binary>=2.9.12",
     "requests>=2.34.2",
+    "tqdm>=4.67.3",
 ]
 
 [dependency-groups]
