@@ -1,3 +1,5 @@
+[![Test](https://github.com/acdh-oeaw/sem-search-db/actions/workflows/test.yml/badge.svg)](https://github.com/acdh-oeaw/sem-search-db/actions/workflows/test.yml)
+[![Linting](https://github.com/acdh-oeaw/sem-search-db/actions/workflows/lint.yml/badge.svg)](https://github.com/acdh-oeaw/sem-search-db/actions/workflows/lint.yml)
 # Semantic Search Database
 
 A Django/Postgresql based database to process, store and expose textual data published through the project "Unified Corpora" via [corpus-search](https://corpus-search.acdh.oeaw.ac.at)
