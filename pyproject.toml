@@ -10,6 +10,9 @@ dependencies = [
     "django-autocomplete-light>=4.0.0",
     "django-spaghetti-and-meatballs>=0.4.2",
     "gunicorn>=26.0.0",
+    "numpy>=2.4.5",
+    "openai>=2.37.0",
+    "pgvector>=0.4.2",
     "psycopg2-binary>=2.9.12",
     "requests>=2.34.2",
 ]

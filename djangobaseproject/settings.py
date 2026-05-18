@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "django.contrib.postgres",
     "django.contrib.staticfiles",
     "crispy_forms",
     "crispy_bootstrap5",
@@ -36,18 +37,19 @@ INSTALLED_APPS = [
     "django_spaghetti",
     "webpage",
     "browsing",
+    "archiv",
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
-# SPAGHETTI_SAUCE = {
-#     "apps": [
-#         "",
-#     ],
-#     "show_fields": False,
-#     "exclude": {"auth": ["user"]},
-# }
+SPAGHETTI_SAUCE = {
+    "apps": [
+        "archiv",
+    ],
+    "show_fields": False,
+    "exclude": {"auth": ["user"]},
+}
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
