@@ -1,6 +1,7 @@
+# Semantic Search Database
+
 [![Test](https://github.com/acdh-oeaw/sem-search-db/actions/workflows/test.yml/badge.svg)](https://github.com/acdh-oeaw/sem-search-db/actions/workflows/test.yml)
 [![Linting](https://github.com/acdh-oeaw/sem-search-db/actions/workflows/lint.yml/badge.svg)](https://github.com/acdh-oeaw/sem-search-db/actions/workflows/lint.yml)
-# Semantic Search Database
 
 A Django/Postgresql based database to process, store and expose textual data published through the project "Unified Corpora" via [corpus-search](https://corpus-search.acdh.oeaw.ac.at)
 
@@ -11,6 +12,14 @@ A Django/Postgresql based database to process, store and expose textual data pub
 * run migrations `uv run manage.py migrate`
 * start the dev sever `uv run manage.py runserver`
 * go to [http://127.0.0.1:8000](http://127.0.0.1:8000/) and check if everything works
+
+## data processing
+
+To vectorize `TextSnippets` of a collection "TestCollection run
+
+```shell
+uv run manage.py vectorize_snippets  --update --collection TestCollection
+```
 
 ## Docker
 
