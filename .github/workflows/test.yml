@@ -22,10 +22,6 @@ jobs:
           --health-interval 10s \
           --health-timeout 5s \
           --health-retries 5
-        # Install vector extension
-        command: >-
-          bash -c "apt-get update && apt-get install -y postgresql-16-vector && \
-          docker-entrypoint.sh postgres"
     steps:
     - name: checkout the repo  
       uses: actions/checkout@v6
