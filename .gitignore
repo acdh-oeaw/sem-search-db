@@ -38,3 +38,4 @@ secret.env
 
 llama/llama/
 llama/models/
+play.py
