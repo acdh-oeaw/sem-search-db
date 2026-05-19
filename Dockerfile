@@ -12,7 +12,7 @@ COPY . /opt/app
 WORKDIR /opt/app
 RUN mkdir -p /opt/app
 RUN uv sync --no-install-project
-RUN llama/download-model.sh
+RUN ./llama/download-model.sh
 RUN chown -R www-data:www-data /opt/app
 
 # start server

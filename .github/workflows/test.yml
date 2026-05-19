@@ -25,6 +25,8 @@ jobs:
       uses: astral-sh/setup-uv@v8.1.0
     - name: install dependencies
       run: uv sync --locked
+    - name: download model
+      run: ./llama/download-model.sh
     - name: Run migrations
       run: |
         uv run manage.py migrate
