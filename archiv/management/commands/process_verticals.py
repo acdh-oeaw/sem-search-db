@@ -13,6 +13,14 @@ from archiv.utils import process_vrt_file
 class Command(BaseCommand):
     help = "Imports data from verticals"
 
+    def add_arguments(self, parser):
+        parser.add_argument(
+            "--collection",
+            type=str,
+            default="",
+            help="Name of the collection to vectorize snippets for.",
+        )
+
     def handle(self, *args, **options):
         files = sorted(glob.glob("verticals/*.vrt"))
         black_list = [
@@ -23,11 +31,19 @@ class Command(BaseCommand):
             "tunocent",
             "shawi",
         ]
+        collection_name = options.get("collection") or "__all__"
         for x in files:
             file_name = os.path.split(x)[1].replace(".vrt", "")
+            if collection_name == "__all__":
+                pass
+            elif collection_name == file_name:
+                pass
+            else:
+                continue
             if file_name in black_list:
                 print(f"skipping {x}")
                 continue
+
             print(f"processing {x}")
             col = Collection.objects.get_or_create(title=file_name)[0]
 

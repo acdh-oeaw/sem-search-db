@@ -15,7 +15,27 @@ A Django/Postgresql based database to process, store and expose textual data pub
 
 ## data processing
 
-To vectorize `TextSnippets` of a collection "TestCollection run
+### download/extract verticals
+
+```shell
+uv run manage.py dl_verticals
+```
+
+### import data from verticals
+
+```shell
+uv run manage.py process_verticals
+```
+
+To process only a given corpus/collection, add the name of the vertical/corpus via `--collection` param
+
+```shell
+uv run manage.py create_embeddings --collection=jad
+```
+
+### create embeddings
+
+To vectorize `TextSnippets` of a collection "TestCollection" run
 
 ```shell
 uv run manage.py create_embeddings --update --collection TestCollection
