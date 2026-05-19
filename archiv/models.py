@@ -35,6 +35,12 @@ class TextSnippet(DateStampedModel):
         verbose_name="Content", help_text="The actual text content"
     )
     backlink = models.URLField(verbose_name="Link to source")
+    lang_code = models.CharField(
+        max_length=3,
+        verbose_name="Language code",
+        help_text="e.g. 'deu' or 'lat'",
+        default="deu",
+    )
     text_hash = models.CharField(
         max_length=64,
         db_index=True,
@@ -46,6 +52,7 @@ class TextSnippet(DateStampedModel):
         blank=True,
         null=True,
     )
+    vectorized = models.BooleanField(default=False, verbose_name="Embeddings exist")
 
     class Meta:
         ordering = ["-updated_at"]
@@ -71,6 +78,8 @@ class TextSnippet(DateStampedModel):
     def save(self, *args, **kwargs):
         if self.content:
             self.text_hash = hashlib.sha256(self.content.encode("utf-8")).hexdigest()
+        if isinstance(self.embedding, np.ndarray):
+            self.vectorized = True
         super().save(*args, **kwargs)
 
     @classmethod

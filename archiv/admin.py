@@ -28,4 +28,8 @@ class TextSnippetAdmin(admin.ModelAdmin):
         "created_at",
         "updated_at",
     ]
-    list_filter = ["collection"]
+    list_filter = [
+        "collection",
+        "vectorized",
+        "lang_code",
+    ]

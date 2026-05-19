@@ -22,4 +22,5 @@ def vectorize(
                 .embedding
             )
             setattr(model_object, vector_field, vector)
+            model_object.vectorized = True
             model_object.save()
