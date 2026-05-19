@@ -2,6 +2,7 @@ FROM ghcr.io/astral-sh/uv:python3.14-bookworm-slim
 
 RUN apt-get update -y && apt-get install -y --no-install-recommends nginx vim curl \
     postgresql-common libpq-dev build-essential gcc g++ make pkg-config cmake ninja-build \
+    skopeo \
     && rm -rf /var/lib/apt/lists/*
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log

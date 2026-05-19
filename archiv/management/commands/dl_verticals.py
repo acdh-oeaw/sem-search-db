@@ -8,18 +8,17 @@ from tqdm import tqdm
 
 
 class Command(BaseCommand):
-    help = "Downloads and extracts verticals from Docker image"
+    help = "Downloads and extracts verticals from an OCI image"
 
     def handle(self, *args, **options):
         IMG = "ghcr.io/acdh-oeaw/corpus-search/corpus-search"
 
-        # Pull docker image
-        print(f"Pulling {IMG}...")
-        subprocess.run(["docker", "pull", IMG], check=True)
-
-        # Save docker image
-        print("Saving docker image to tmp.tar...")
-        subprocess.run(["docker", "save", IMG, "-o", "tmp.tar"], check=True)
+        # Copy the image into an OCI archive.
+        print(f"Copying {IMG} to tmp.tar...")
+        subprocess.run(
+            ["skopeo", "copy", f"docker://{IMG}", "oci-archive:tmp.tar:corpus-search"],
+            check=True,
+        )
 
         # Create tmp directory and extract tar
         print("Extracting tmp.tar...")

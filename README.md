@@ -17,6 +17,8 @@ A Django/Postgresql based database to process, store and expose textual data pub
 
 ### download/extract verticals
 
+This script depends on [skopeo](https://github.com/containers/skopeo). Make sure you have it installed, e.g. `sudo apt-get install skopeo`
+
 ```shell
 uv run manage.py dl_verticals
 ```
