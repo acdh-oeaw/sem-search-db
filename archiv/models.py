@@ -69,7 +69,7 @@ class TextSnippet(DateStampedModel):
         ]
 
     def __str__(self):
-        if isinstance(self.embedding, np.ndarray):
+        if self.vectorized:
             vector = "✓"
         else:
             vector = "✗"
@@ -83,15 +83,6 @@ class TextSnippet(DateStampedModel):
         else:
             self.vectorized = False
         super().save(*args, **kwargs)
-
-    @classmethod
-    def get_vector_field_names(cls):
-        """Return a list of all field names that are VectorFields."""
-        return [
-            field.name
-            for field in cls._meta.get_fields()
-            if isinstance(field, VectorField)
-        ]
 
     def find_similar(
         self,
