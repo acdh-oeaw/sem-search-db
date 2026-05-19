@@ -6,3 +6,5 @@ secret.env
 .vscode/
 llama/llama/
 llama/models/
+verticals/
+.gitignore/
