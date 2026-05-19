@@ -25,12 +25,16 @@ uv run manage.py create_embeddings --update --collection TestCollection
 
 At the ACDH-CH we use a centralized database-server. So instead of spawning a database for each service our services are talking to a database on this centralized db-server. This setup is reflected in the dockerized setting as well, meaning it expects an already existing database (either on your host, e.g. accessible via 'localhost' or some remote one)
 
-### building and running the image
+### build the image
 
 ```shell
 docker build -t semsearchdb:latest .
-docker build -t semsearchdb:latest --no-cache .
-docker run -it -p 8020:8020 --rm --env-file default.env --name semsearchdb semsearchdb:latest
+```
+
+### run the image
+
+```shell
+docker run -it --network="host" --rm --env-file default.env --name semsearchdb semsearchdb:latest
 ```
 
 -----
