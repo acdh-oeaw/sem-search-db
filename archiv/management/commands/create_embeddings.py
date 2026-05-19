@@ -1,8 +1,9 @@
 import time
 from datetime import timedelta
 
+import llama_cpp
 from django.core.management.base import BaseCommand
-from openai import BadRequestError, InternalServerError, OpenAI
+from openai import BadRequestError, InternalServerError
 from tqdm import tqdm
 
 from archiv.models import Collection, TextSnippet
@@ -26,9 +27,7 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        # client = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")
-        client = OpenAI(base_url="http://localhost:1234/v1", api_key="lm-studio")
-        # client = OpenAI(base_url="http://127.0.0.1:8080/v1", api_key="llama-ccp")
+        client = llama_cpp.Llama(model_path="llama/models/model.gguf", embedding=True)
         start_time = time.time()
         collection_name = options.get("collection") or "TestCollection"
         update_flag = options.get("update", False)

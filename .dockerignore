@@ -4,3 +4,5 @@ db.sqlite3
 secret.env
 .github/
 .vscode/
+llama/llama/
+llama/models/
