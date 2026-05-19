@@ -18,23 +18,20 @@ A Django/Postgresql based database to process, store and expose textual data pub
 To vectorize `TextSnippets` of a collection "TestCollection run
 
 ```shell
-uv run manage.py vectorize_snippets  --update --collection TestCollection
+uv run manage.py create_embeddings --update --collection TestCollection
 ```
 
 ## Docker
 
 At the ACDH-CH we use a centralized database-server. So instead of spawning a database for each service our services are talking to a database on this centralized db-server. This setup is reflected in the dockerized setting as well, meaning it expects an already existing database (either on your host, e.g. accessible via 'localhost' or some remote one)
 
-### building the image
+### building and running the image
 
-* `docker build -t semsearchdb:latest .`
-* `docker build -t semsearchdb:latest --no-cache .`
-
-### running the image
-
-To run the image you should provide an `.env` file to pass in needed environment variables; see example below:
-
-* `docker run -it -p 8020:8020 --rm --env-file default.env --name semsearchdb semsearchdb:latest`
+```shell
+docker build -t semsearchdb:latest .
+docker build -t semsearchdb:latest --no-cache .
+docker run -it -p 8020:8020 --rm --env-file default.env --name semsearchdb semsearchdb:latest
+```
 
 -----
 
