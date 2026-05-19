@@ -80,6 +80,8 @@ class TextSnippet(DateStampedModel):
             self.text_hash = hashlib.sha256(self.content.encode("utf-8")).hexdigest()
         if isinstance(self.embedding, np.ndarray):
             self.vectorized = True
+        else:
+            self.vectorized = False
         super().save(*args, **kwargs)
 
     @classmethod

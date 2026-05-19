@@ -22,9 +22,9 @@ class TextSnippetAdmin(admin.ModelAdmin):
     list_display = [
         "id",
         "collection",
-        "backlink",
+        "lang_code",
+        "vectorized",
         "content",
-        "text_hash",
         "created_at",
         "updated_at",
     ]
