@@ -33,7 +33,13 @@ class Command(BaseCommand):
         collection_name = options.get("collection") or "TestCollection"
         update_flag = options.get("update", False)
         col = Collection.objects.filter(title=collection_name)
-        for x in tqdm(TextSnippet.objects.filter(collection__in=col)):
+        if update_flag:
+            items = TextSnippet.objects.filter(collection__in=col)
+        else:
+            items = TextSnippet.objects.filter(collection__in=col).filter(
+                vectorized=True
+            )
+        for x in tqdm(items):
             try:
                 vectorize(client, x, update=update_flag)
             except (BadRequestError, InternalServerError) as e:
