@@ -13,10 +13,12 @@ class CollectionSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class TextSnippetSerializer(serializers.HyperlinkedModelSerializer):
-    kwic = serializers.SerializerMethodField()
+    kwic = serializers.SerializerMethodField(
+        label="KWIC", help_text="Displays search result with marked search term."
+    )
 
-    def get_kwic(self, obj):
-        return getattr(obj, "kwic", None)
+    def get_kwic(self, obj) -> str:
+        return getattr(obj, "kwic", "")
 
     class Meta:
         model = TextSnippet
