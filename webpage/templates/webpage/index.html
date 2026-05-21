@@ -4,9 +4,21 @@
 {% block content %}
 
 
-    <h1 class="text-center">{% projects_metadata 'title' %}</h1>
-    <h2 class="text-center">{% lorem 10 w %}</h2>
-    <p class="text-center">{% lorem 4 %}</p>
+<div class="container">
+    <h1 class="text-center pt-4 pb-2">{% projects_metadata 'title' %}</h1>
+    <h2 class="text-center">Search over xx Textsnippets from yy Datasets</h2>
+    <div class="container">
+        <form method="get">
+            <div class="input-group mt-5">
+                <input type="text" class="form-control" placeholder="start typing your search term, e.g. 'Liability'"
+                    aria-label="start typing your search term, e.g. 'Akademie'" aria-describedby="basic-addon2"
+                    {% if query_string %} value="{{ query_string }}" {% endif %} required name="ft_search">
+                <button class="btn btn-block btn-lg btn-primary" type="submit" id="basic-addon2">Search</span>
+            </div>
+        </form>
+    </div>
+    
+</div>
 
 
 {% endblock %}

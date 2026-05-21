@@ -10,6 +10,7 @@ dependencies = [
     "django-autocomplete-light>=4.0.0",
     "django-extensions>=4.1",
     "django-spaghetti-and-meatballs>=0.4.2",
+    "djangorestframework>=3.17.1",
     "gunicorn>=26.0.0",
     "llama-cpp-python>=0.3.23",
     "numpy>=2.4.5",

@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     "django_extensions",
     "crispy_forms",
     "crispy_bootstrap5",
+    "rest_framework",
     "django_filters",
     "django_tables2",
     "django_spaghetti",
@@ -50,6 +51,16 @@ SPAGHETTI_SAUCE = {
     ],
     "show_fields": False,
     "exclude": {"auth": ["user"]},
+}
+
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": (
+        "rest_framework.permissions.IsAuthenticatedOrReadOnly",
+    ),
+    "DEFAULT_FILTER_BACKENDS": ("django_filters.rest_framework.DjangoFilterBackend",),
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.SessionAuthentication",
+    ),
 }
 
 MIDDLEWARE = [
