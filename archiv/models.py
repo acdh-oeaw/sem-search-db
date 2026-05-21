@@ -1,6 +1,8 @@
 import hashlib
 
 import numpy as np
+from django.contrib.postgres.indexes import GinIndex
+from django.contrib.postgres.search import SearchVectorField
 from django.db import models
 from pgvector.django import CosineDistance, HnswIndex, VectorField
 
@@ -53,12 +55,14 @@ class TextSnippet(DateStampedModel):
         null=True,
     )
     vectorized = models.BooleanField(default=False, verbose_name="Embeddings exist")
+    vector_column = SearchVectorField(null=True, blank=True)
 
     class Meta:
         ordering = ["-updated_at"]
         verbose_name = "Text Snippet"
         verbose_name_plural = "Text Snippets"
         indexes = [
+            GinIndex(fields=["vector_column"]),
             HnswIndex(
                 name="textsnippetindex_nomic",
                 fields=["embedding"],
