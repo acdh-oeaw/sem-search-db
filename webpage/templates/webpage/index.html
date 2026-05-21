@@ -8,7 +8,7 @@
     <h1 class="text-center pt-4 pb-2">{% projects_metadata 'title' %}</h1>
     <h2 class="text-center">Search over xx Textsnippets from yy Datasets</h2>
     <div class="container">
-        <form method="get">
+        <form method="get" action="/api/textsnippets">
             <div class="input-group mt-5">
                 <input type="text" class="form-control" placeholder="start typing your search term, e.g. 'Liability'"
                     aria-label="start typing your search term, e.g. 'Akademie'" aria-describedby="basic-addon2"
@@ -17,7 +17,10 @@
             </div>
         </form>
     </div>
-    
+    <div class="pt-5 d-grid gap-2 d-md-flex justify-content-md-center">
+        <a href="/api/" type="button" class="btn btn-primary btn-lg px-4 me-md-2">Browse the API</a>
+        <a href="/api/docs/" type="button" class="btn btn-outline-primary btn-lg px-4">Read the API-Docs</a>
+    </div>
 </div>
 
 

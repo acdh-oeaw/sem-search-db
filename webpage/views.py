@@ -1,14 +1,13 @@
 from copy import deepcopy
 
 import requests
-
 from django.conf import settings
-from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from django.template import loader
-from django.template.exceptions import TemplateDoesNotExist
-from django.views.generic import TemplateView
 from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.shortcuts import render
+from django.views.generic import TemplateView
+
+from archiv.models import Collection, TextSnippet
 
 from .forms import form_user_login
 from .metadata import PROJECT_METADATA as PM
@@ -37,29 +36,15 @@ class ImprintView(TemplateView):
         return context
 
 
-class GenericWebpageView(TemplateView):
+class IndexView(TemplateView):
     template_name = "webpage/index.html"
 
     def get_context_data(self, **kwargs):
-        context = super(GenericWebpageView, self).get_context_data(**kwargs)
+        context = super(IndexView, self).get_context_data(**kwargs)
         context["apps"] = settings.INSTALLED_APPS
+        context["snippet_count"] = TextSnippet.objects.all()
+        context["collection_count"] = Collection.objects.all()
         return context
-
-    def get_template_names(self):
-        template_name = "webpage/{}.html".format(self.kwargs.get("template", "index"))
-        try:
-            loader.select_template([template_name])
-            template_name = "webpage/{}.html".format(
-                self.kwargs.get("template", "index")
-            )
-        except TemplateDoesNotExist:
-            template_name = "webpage/index.html"
-        return [template_name]
-
-
-#################################################################
-#               views for login/logout                          #
-#################################################################
 
 
 def user_login(request):
