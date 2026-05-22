@@ -1,3 +1,9 @@
+from drf_spectacular.utils import (
+    OpenApiParameter,
+    OpenApiTypes,
+    extend_schema,
+    extend_schema_view,
+)
 from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
 
@@ -19,6 +25,23 @@ class CollectionViewset(viewsets.ModelViewSet):
     filterset_class = CollectionListFilter
 
 
+most_similar_param = OpenApiParameter(
+    name="most-similar",
+    type=OpenApiTypes.INT,
+    location=OpenApiParameter.QUERY,
+    required=False,
+    description="Number of similar snippets to include per result (max 25).",
+)
+
+
+@extend_schema_view(
+    list=extend_schema(
+        parameters=[
+            most_similar_param,
+        ]
+    ),
+    retrieve=extend_schema(parameters=[most_similar_param]),
+)
 class TextSnippetViewset(viewsets.ModelViewSet):
     pagination_class = CustomPagination
     queryset = TextSnippet.objects.all()

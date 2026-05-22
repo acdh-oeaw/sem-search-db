@@ -1,6 +1,21 @@
+from typing import TypedDict
+
+from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
 
 from archiv.models import Collection, TextSnippet
+
+
+class SimilarSnippetDict(TypedDict):
+    id: int
+    content: str
+    distance: float
+
+
+class SimilarSnippetSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    content = serializers.CharField()
+    distance = serializers.FloatField()
 
 
 class CollectionSerializer(serializers.HyperlinkedModelSerializer):
@@ -24,23 +39,29 @@ class TextSnippetSerializer(serializers.HyperlinkedModelSerializer):
     def get_kwic(self, obj) -> str:
         return getattr(obj, "kwic", "")
 
-    def get_most_similar_snippets(self, obj) -> list:
-        data = []
+    @extend_schema_field(SimilarSnippetSerializer(many=True))
+    def get_most_similar_snippets(self, obj) -> list[SimilarSnippetDict]:
         request = self.context.get("request")
-        n = int(request.query_params.get("most-similar", False))
-        if n:
-            try:
-                n = int(n)
-            except TypeError, ValueError:
-                n = 5
-            if n > 25:
-                n = 25
-            data = [
-                {"id": x.id, "content": x.content, "distance": x.distance}
-                for x in obj.find_similar(amount=n)
-            ]
+        if request is None:
+            return []
 
-        return data
+        raw_n = request.query_params.get("most-similar")
+        if raw_n in (None, ""):
+            return []
+
+        try:
+            n = int(raw_n)
+        except TypeError, ValueError:
+            n = 5
+
+        if n <= 0:
+            return []
+
+        n = min(n, 25)
+        return [
+            {"id": x.id, "content": x.content, "distance": x.distance}
+            for x in obj.find_similar(amount=n)
+        ]
 
     class Meta:
         model = TextSnippet

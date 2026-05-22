@@ -94,6 +94,7 @@ class TextSnippet(DateStampedModel):
         collection_title: str = "__all__",
         amount: int = 3,
     ):
+        amount = amount + 1
         if not self.vectorized:
             return TextSnippet.objects.none()
         if collection_title == "__all__":
