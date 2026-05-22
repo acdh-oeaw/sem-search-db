@@ -1,9 +1,14 @@
+import os
 from io import StringIO
 
 from django.core.management import call_command
 from django.test import Client, TestCase
 
 from archiv.models import Collection, TextSnippet
+from archiv.utils import process_vrt_file
+
+VERTICAL_FILE = os.path.join("archiv", "fixtures", "jhp.vrt")
+
 
 client = Client()
 
@@ -129,3 +134,14 @@ class ArchivTestCase(TestCase):
         data = response.json()
         item = data["results"][0]
         self.assertFalse(item["most_similar_snippets"])
+
+
+class VerticalsTestCase(TestCase):
+    def test_01(self):
+        data = process_vrt_file(VERTICAL_FILE)
+        self.assertTrue(isinstance(data, list))
+        item = data[0]
+        self.assertEqual(
+            len(item.split("\t")), 3, msg=f"{len(item.split('\t'))} should be 3"
+        )
+        self.assertTrue(item.startswith("jhp"), msg=f"{item} should start with 'jhp'")
