@@ -16,7 +16,7 @@ class Command(BaseCommand):
         parser.add_argument(
             "--collection",
             type=str,
-            default="TestCollection",
+            default="__all__",
             help="Name of the collection to vectorize snippets for.",
         )
         parser.add_argument(
@@ -29,13 +29,14 @@ class Command(BaseCommand):
         start_time = time.time()
         collection_name = options.get("collection") or "TestCollection"
         update_flag = options.get("update", False)
-        col = Collection.objects.filter(title=collection_name)
-        if update_flag:
-            items = TextSnippet.objects.filter(collection__in=col)
+        if collection_name == "__all__":
+            items = TextSnippet.objects.all()
         else:
-            items = TextSnippet.objects.filter(collection__in=col).filter(
-                vectorized=False
-            )
+            col = Collection.objects.filter(title=collection_name)
+            items = TextSnippet.objects.filter(collection__in=col)
+
+        if not update_flag:
+            items = items.filter(vectorized=False)
         for x in tqdm(items):
             try:
                 vectorize(x, update=update_flag)

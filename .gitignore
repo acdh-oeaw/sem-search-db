@@ -40,3 +40,4 @@ llama/llama/
 llama/models/
 play.py
 verticals/
+foo.*

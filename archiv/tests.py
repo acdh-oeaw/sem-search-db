@@ -94,3 +94,38 @@ class ArchivTestCase(TestCase):
         data = response.json()
         kwic = data["results"][0]["kwic"]
         self.assertTrue("<mark>Klubchef</mark>" in kwic)
+
+    def test_04_most_similar(self):
+        call_command("create_embeddings")
+        url = "/api/textsnippets/?most-similar=1"
+        response = client.get(url)
+        self.assertEqual(
+            response.status_code,
+            200,
+            f"Expected 200 for {url}, got {response.status_code}",
+        )
+        data = response.json()
+        item = data["results"][0]
+        self.assertTrue("distance" in item["most_similar_snippets"][0].keys())
+
+        url = "/api/textsnippets/?most-similar=-1"
+        response = client.get(url)
+        self.assertEqual(
+            response.status_code,
+            200,
+            f"Expected 200 for {url}, got {response.status_code}",
+        )
+        data = response.json()
+        item = data["results"][0]
+        self.assertFalse(item["most_similar_snippets"])
+
+        url = "/api/textsnippets/?most-similar=foo"
+        response = client.get(url)
+        self.assertEqual(
+            response.status_code,
+            200,
+            f"Expected 200 for {url}, got {response.status_code}",
+        )
+        data = response.json()
+        item = data["results"][0]
+        self.assertFalse(item["most_similar_snippets"])

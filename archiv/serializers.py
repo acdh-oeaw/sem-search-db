@@ -52,7 +52,7 @@ class TextSnippetSerializer(serializers.HyperlinkedModelSerializer):
         try:
             n = int(raw_n)
         except TypeError, ValueError:
-            n = 5
+            return []
 
         if n <= 0:
             return []
@@ -67,6 +67,7 @@ class TextSnippetSerializer(serializers.HyperlinkedModelSerializer):
         model = TextSnippet
         fields = [
             "url",
+            "vectorized",
             "collection",
             "lang_code",
             "content",
