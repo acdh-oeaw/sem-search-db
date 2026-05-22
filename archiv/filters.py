@@ -65,6 +65,7 @@ class TextSnippetListFilter(django_filters.FilterSet):
             "content",
             "lang_code",
             "collection",
+            "vectorized",
         ]
 
 

@@ -92,8 +92,10 @@ class TextSnippet(DateStampedModel):
         self,
         vector_field: str = "embedding",
         collection_title: str = "__all__",
-        amount: str = 3,
+        amount: int = 3,
     ):
+        if not self.vectorized:
+            return TextSnippet.objects.none()
         if collection_title == "__all__":
             qs = TextSnippet.objects.all()
         else:
@@ -102,5 +104,5 @@ class TextSnippet(DateStampedModel):
         qs = qs.exclude(**{f"{vector_field}__isnull": True})
         qs = qs.annotate(
             distance=CosineDistance(vector_field, getattr(self, vector_field))
-        ).order_by("distance")[:amount]
+        ).order_by("distance")[1:amount]
         return qs
