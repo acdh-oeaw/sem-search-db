@@ -8,14 +8,24 @@ from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
 
 from archiv.filters import CollectionListFilter, TextSnippetListFilter
-from archiv.models import Collection, TextSnippet
-from archiv.serializers import CollectionSerializer, TextSnippetSerializer
+from archiv.models import Collection, TextSnippet, UserInput
+from archiv.serializers import (
+    CollectionSerializer,
+    TextSnippetSerializer,
+    UserInputSerializer,
+)
 
 
 class CustomPagination(PageNumberPagination):
     page_size = 10
     max_page_size = 25
     page_size_query_param = "page_size"
+
+
+class UserInputViewset(viewsets.ModelViewSet):
+    pagination_class = CustomPagination
+    queryset = UserInput.objects.all()
+    serializer_class = UserInputSerializer
 
 
 class CollectionViewset(viewsets.ModelViewSet):
