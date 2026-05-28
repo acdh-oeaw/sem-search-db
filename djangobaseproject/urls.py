@@ -11,6 +11,7 @@ from archiv import api_views
 router = routers.DefaultRouter()
 router.register(r"collections", api_views.CollectionViewset)
 router.register(r"textsnippets", api_views.TextSnippetViewset)
+router.register(r"questions", api_views.UserInputViewset)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
