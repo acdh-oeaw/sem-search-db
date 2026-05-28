@@ -6,6 +6,8 @@ from django.contrib.postgres.search import SearchVectorField
 from django.db import models
 from pgvector.django import CosineDistance, HnswIndex, VectorField
 
+from archiv.utils import client
+
 
 class DateStampedModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
@@ -13,6 +15,38 @@ class DateStampedModel(models.Model):
 
     class Meta:
         abstract = True
+
+
+class UserInput(DateStampedModel):
+    content = models.CharField(
+        max_length=500,
+        verbose_name="Question",
+        help_text="Input/Question provided by the user",
+    )
+    text_hash = models.CharField(
+        max_length=64,
+        db_index=True,
+        editable=False,
+    )
+    embedding = VectorField(
+        dimensions=768,
+        verbose_name="Embedding (nomic-embed-text-v1.5)",
+        blank=True,
+        null=True,
+    )
+
+    def save(self, *args, **kwargs):
+        if not self.text_hash:
+            self.text_hash = hashlib.sha256(self.content.encode("utf-8")).hexdigest()
+        if isinstance(self.embedding, np.ndarray) or isinstance(self.embedding, list):
+            vector = client.create_embedding(
+                self.content,
+            )["data"][0]["embedding"]
+            self.embedding = vector
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.content[:50]}..."
 
 
 class Collection(DateStampedModel):
