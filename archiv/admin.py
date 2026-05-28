@@ -1,6 +1,18 @@
 from django.contrib import admin
 
-from archiv.models import Collection, TextSnippet
+from archiv.models import Collection, TextSnippet, UserInput
+
+
+@admin.register(UserInput)
+class UserInputAdmin(admin.ModelAdmin):
+    list_display = [
+        "id",
+        "content",
+        "text_hash",
+        "created_at",
+        "updated_at",
+    ]
+    search_fields = ["content"]
 
 
 @admin.register(Collection)

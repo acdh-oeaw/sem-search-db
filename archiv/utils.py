@@ -3,8 +3,6 @@ import re
 import llama_cpp
 import numpy as np
 
-from archiv.models import TextSnippet
-
 client = llama_cpp.Llama(
     model_path="llama/models/model.gguf", embedding=True, verbose=False
 )
@@ -87,7 +85,7 @@ def process_vrt_file(filepath):
 
 
 def vectorize(
-    model_object: TextSnippet,
+    model_object,
     vector_field: str = "embedding",
     update=False,
     client=client,
