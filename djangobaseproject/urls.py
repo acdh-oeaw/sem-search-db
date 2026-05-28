@@ -6,7 +6,7 @@ from drf_spectacular.views import (
 )
 from rest_framework import routers
 
-from archiv import api_views
+from archiv import api_views, views
 
 router = routers.DefaultRouter()
 router.register(r"collections", api_views.CollectionViewset)
@@ -17,6 +17,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include(router.urls)),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
+    path("ask/", views.ask_a_question, name="ask"),
     path(
         "api/docs/",
         SpectacularSwaggerView.as_view(url_name="schema"),

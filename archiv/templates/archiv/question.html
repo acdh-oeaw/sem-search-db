@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+{% load webpage_extras %}
+{% block title %} Ask {% endblock %}
+{% block content %}
+<div class="container">
+    <h1 class="text-center pt-4 pb-2">Ask me</h1>
+    <h2 class="text-center">Enter a short text snippet to find similar entries</h2>
+    <div class="container">
+        <form method="post" action="">
+            {% csrf_token %}
+            <div class="input-group mt-5">
+                <input type="text" class="form-control"
+                    aria-label="start typing your search term, e.g. 'Bau der Eisenbahn'" aria-describedby="basic-addon2"
+                    required name="content">
+                <button class="btn btn-block btn-lg btn-primary" type="submit" id="basic-addon2">Ask</span>
+            </div>
+        </form>
+        {% if object %}
+        <h2>{{ object.content }} {% if created %} <small>(created)</small> {% else %}<small>(already asked){% endif %}</small></h2>
+        {% endif %}
+        {% if related_objects %}
+        <ul>
+            {% for x in related_objects %}
+            <li><small>{{ x.distance }}</small> {{ x.content }} <small><a href="{{ x.backlink }}">{{ x.backlink }}</a></small></li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
