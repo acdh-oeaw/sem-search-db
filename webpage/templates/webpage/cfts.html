@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load static %}
+{% load webpage_extras %}
+{% block title %}cfts-search-client{% endblock %}
+{% block scriptHeader %}
+<script
+    src="https://cdn.jsdelivr.net/npm/typesense-instantsearch-adapter@2/dist/typesense-instantsearch-adapter.min.js">
+    </script>
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.5.1/dist/algoliasearch-lite.umd.js"
+    integrity="sha256-EXPXz4W6pQgfYY3yTpnDa3OH8/EPn16ciVsPQ/ypsjk=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.8.3/dist/instantsearch.production.min.js"
+    integrity="sha256-LAGhRRdtVoD6RLo2qDQsU2mp+XVSciKRC8XPOBWmofM=" crossorigin="anonymous"></script>
+{% endblock scriptHeader %}
+{% block content %}
+<div class="container">
+    <h1 class="text-center pt-4 pb-2">cfts-search-client</h1>
+    <h2 class="text-center"></h2>
+    <div class="pt-5 d-grid gap-2 d-md-flex justify-content-md-center">
+        <p class="lead">CFTS stand for <strong>C</strong>entral <strong>F</strong>ull <strong>T</strong>ext Search. CFTS
+            is also a Typesense collection, populated by serveral projects run/hosted/maintend by the ACDH. This webpage
+            exposes this index, allowing a fast, typo-tolerant and faceted full text search.</p>
+    </div>
+    <div>
+        <div class="ais-InstantSearch">
+            <div class="row">
+                <div class="col-md-4">
+                    <div id="stats-container"></div>
+                    <div id="searchbox"></div>
+                    <div id="current-refinements"></div>
+                    <div id="clear-refinements"></div>
+                    <div id="sort-by"></div>
+
+                    <h3>Projekte</h3>
+                    <div id="refinement-list-project"></div>
+                    <h3>Personen</h3>
+                    <div id="refinement-list-persons"></div>
+                    <h3>Werke</h3>
+                    <div id="refinement-list-works"></div>
+                    <h3>Orte</h3>
+                    <div id="refinement-list-places"></div>
+                    <h3>Schlagworte</h3>
+                    <div id="refinement-list-keywords"></div>
+                    <h3>Jahr</h3>
+                    <div id="range-input"></div>
+                </div>
+                <div class="col-md-8">
+                    <div id="hits"></div>
+                    <div id="pagination"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts2 %}
+    <script src="{% static 'webpage/js/ts_index.js' %}"></script>
+{% endblock scripts2 %}
