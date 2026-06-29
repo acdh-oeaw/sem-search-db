@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.test import Client, TestCase
+from django.urls import reverse
 
 
 class WebpageTest(TestCase):
@@ -20,3 +21,9 @@ class WebpageTest(TestCase):
         form_data = {"username": "non_exist", "password": "temporary"}
         rv = self.client.post("/accounts/login/", form_data, follow=True)
         self.assertContains(rv, "user does not exist")
+
+    def test_cfts(self):
+        url = reverse("webpage:cfts")
+        rv = self.client.get(url)
+        self.assertEqual(rv.status_code, 200)
+        self.assertContains(rv, "cfts")
