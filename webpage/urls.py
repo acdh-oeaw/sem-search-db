@@ -11,6 +11,7 @@ favicon_view = RedirectView.as_view(url="/static/favicon.ico", permanent=True)
 urlpatterns = [
     path("imprint", views.ImprintView.as_view(), name="imprint"),
     path("", views.IndexView.as_view(), name="index"),
+    path("cfts", views.CftsView.as_view(), name="cfts"),
     path(
         "data-model",
         Plate.as_view(plate_template_name="webpage/data_model.html"),

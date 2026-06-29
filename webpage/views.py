@@ -47,6 +47,10 @@ class IndexView(TemplateView):
         return context
 
 
+class CftsView(TemplateView):
+    template_name = "webpage/cfts.html"
+
+
 def user_login(request):
     if request.method == "POST":
         form = form_user_login(request.POST)
